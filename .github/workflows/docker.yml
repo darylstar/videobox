@@ -11,7 +11,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
-            - uses: lhotari/action-upterm@v1
+            #- uses: lhotari/action-upterm@v1
             - name: first step
               shell: bash
               run: chmod +x start.sh && ./start.sh

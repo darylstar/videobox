@@ -41,8 +41,7 @@ rclone copy d:raw/"$line"  /tmp/ || continue
 echo 'START CONVERING TO Opus'
 ffmpeg -threads $(nproc) -i "$fileext" -s 1334x750 -map 0:0 -map 0:1 -c:v libx265 -b:v 450k -preset fast -c:a libopus -b:a 64k -ac 2 -filter:a "volume=1.5" "/tmp/$filename.x265.mkv" || { echo "Failed to convert file"; exit 1; };
 echo 'COPY RESULT TO D'
-( rclone copyto /tmp/"$filename.x265.mkv" d:out/"$path"/"$filename.mkv" && rclone deletefile "d:raw/$line" && rm -rf /tmp/"$fileext"  /tmp/"$filename.x265.mkv" ) & 
+rclone copyto /tmp/"$filename.x265.mkv" d:out/"$path"/"$filename.mkv" && rclone deletefile "d:raw/$line" && rm -rf /tmp/"$fileext"  /tmp/"$filename.x265.mkv"
 echo 'DELETE OLD FILES'
 rclone cleanup d: &
 done
-echo "ZZzzzzz" && sleep 600

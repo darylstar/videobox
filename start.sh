@@ -19,7 +19,7 @@ sudo apt-get install ffmpeg
 
 cd /home
 shopt -s expand_aliases
-# alias ffmpeg='ffmpeg -hide_banner -loglevel fatal -nostats'
+alias ffmpeg='ffmpeg -hide_banner -loglevel fatal -nostats'
 
 
 for line in "${Array[@]}"; do 

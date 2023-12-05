@@ -1,6 +1,7 @@
 #!/bin/bash
 # 0 3 * * * 
 
+#install rclone
 curl https://rclone.org/install.sh | sudo bash 2>&1 1>/dev/null
 mkdir -p ~/.config/rclone && printf $RCFG > ~/.config/rclone/rclone.conf
 

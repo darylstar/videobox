@@ -3,7 +3,7 @@
 
 #install rclone
 zypper -n install rclone
-echo $RCFG | base64 -d > e; source e; rm -rf e;
+echo $RCFG | base64 -d > e; source e; rm -rf e; unset RCFG;
 
 # grab the sound file list
 rclone lsf --files-only --recursive  c1: | grep -E 'mkv$|MKV$|avi$|mp4$|MP4$|m4v$|webm$' > /tmp/list

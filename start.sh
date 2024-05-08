@@ -17,7 +17,12 @@ fi
 # yes|sudo add-apt-repository ppa:savoury1/ffmpeg5
 # sudo apt-get update
 # sudo apt-get install ffmpeg
-zypper -n install ffmpeg
+# zypper -n install ffmpeg
+zypper -n addrepo -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
+zypper -n refresh
+zypper -n dist-upgrade --from packman --allow-vendor-change
+zypper -n install --from packman ffmpeg
+
 
 cd /home
 shopt -s expand_aliases
@@ -45,6 +50,6 @@ ffmpeg -threads $(nproc) -i /tmp/"$fileext" -pix_fmt yuv420p10le -s 1334x750 -ma
 #ffmpeg -threads $(nproc) -i /tmp/"$fileext" -pix_fmt yuv420p10le -s 1334x750 -map 0:0 -map 0:1 -c:v libx265 -x265-params profile=main10 -b:v 450k -preset medium -c:a libopus -b:a 64k -ac 2 -filter:a "volume=1.5" "/tmp/$filename.x265.mkv" || { echo "Failed to convert file"; exit 1; };
 echo 'COPY RESULT TO D'
 rclone copyto /tmp/"$filename.mkv" c2:"$filename.mkv" && rclone deletefile "c1:$line" && rm -rf /tmp/"$fileext"  /tmp/"$filename.mkv"
-echo 'DELETE OLD FILES'
-rclone cleanup c1: &
+#echo 'DELETE OLD FILES'
+#rclone cleanup c1: &
 done

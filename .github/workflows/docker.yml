@@ -9,8 +9,9 @@ on:
 jobs:
     my-job:
         runs-on: ubuntu-latest
+        container: opensuse/tumbleweed:latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@master
             #- uses: lhotari/action-upterm@v1
             - name: first step
               shell: bash

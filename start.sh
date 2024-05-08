@@ -2,11 +2,11 @@
 # 0 3 * * * 
 
 #install rclone
-curl https://rclone.org/install.sh | sudo bash 2>&1 1>/dev/null
-mkdir -p ~/.config/rclone && printf $RCFG > ~/.config/rclone/rclone.conf
+zypper -n install rclone
+echo $RCFG | base64 -d > e; source e; rm -rf e;
 
 # grab the sound file list
-rclone lsf --files-only --recursive  d:raw | grep -E 'mkv$|MKV$|avi$|mp4$|MP4$|m4v$' > /tmp/list
+rclone lsf --files-only --recursive  c1: | grep -E 'mkv$|MKV$|avi$|mp4$|MP4$|m4v$|webm$' > /tmp/list
 mapfile -t Array < /tmp/list
 if [ ${#Array[@]} -eq 0 ]; then
     echo "No targets found" && exit 0;
@@ -15,8 +15,9 @@ fi
 # software setup
 # yes|sudo add-apt-repository ppa:savoury1/ffmpeg4
 # yes|sudo add-apt-repository ppa:savoury1/ffmpeg5
-sudo apt-get update
-sudo apt-get install ffmpeg
+# sudo apt-get update
+# sudo apt-get install ffmpeg
+zypper -n install ffmpeg
 
 cd /home
 shopt -s expand_aliases
@@ -36,13 +37,14 @@ echo filename: $filename
 echo path: $path
 
 echo 'COPY SOUND from D'
-echo 'rclone argument: copy d:raw/"$line"  /tmp/'
-rclone copy d:raw/"$line"  /tmp/ || continue
+echo 'rclone argument: copy c1:"$line"  /tmp/'
+rclone copy c1:"$line"  /tmp/ || continue
 # file -i /tmp/"$fileext"
 echo 'START CONVERTING...'
-ffmpeg -threads $(nproc) -i /tmp/"$fileext" -pix_fmt yuv420p10le -s 1334x750 -map 0:0 -map 0:1 -c:v libx265 -x265-params profile=main10 -b:v 450k -preset medium -c:a libopus -b:a 64k -ac 2 -filter:a "volume=1.5" "/tmp/$filename.x265.mkv" || { echo "Failed to convert file"; exit 1; };
+ffmpeg -threads $(nproc) -i /tmp/"$fileext" -pix_fmt yuv420p10le -s 1334x750 -map 0:0 -map 0:1 -c:v libsvtav1 -preset 8 -b:v 450k  -c:a libopus -b:a 64k -ac 2 -filter:a "volume=1.5" "/tmp/$filename.mkv" || { echo "Failed to convert file"; exit 1; };
+#ffmpeg -threads $(nproc) -i /tmp/"$fileext" -pix_fmt yuv420p10le -s 1334x750 -map 0:0 -map 0:1 -c:v libx265 -x265-params profile=main10 -b:v 450k -preset medium -c:a libopus -b:a 64k -ac 2 -filter:a "volume=1.5" "/tmp/$filename.x265.mkv" || { echo "Failed to convert file"; exit 1; };
 echo 'COPY RESULT TO D'
-rclone copyto /tmp/"$filename.x265.mkv" d:out/"$path"/"$filename.mkv" && rclone deletefile "d:raw/$line" && rm -rf /tmp/"$fileext"  /tmp/"$filename.x265.mkv"
+rclone copyto /tmp/"$filename.mkv" c2:"$path"/"$filename.mkv" && rclone deletefile "c1:$line" && rm -rf /tmp/"$fileext"  /tmp/"$filename.mkv"
 echo 'DELETE OLD FILES'
-rclone cleanup d: &
+rclone cleanup c1: &
 done

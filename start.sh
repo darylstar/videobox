@@ -18,8 +18,7 @@ fi
 # sudo apt-get update
 # sudo apt-get install ffmpeg
 # zypper -n install ffmpeg
-zypper -n addrepo -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman | echo 'a'
-zypper -n --gpg-auto-import-keys  refresh
+zypper -n addrepo -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
 zypper -n dist-upgrade --from packman --allow-vendor-change
 zypper -n install -y --from packman ffmpeg
 

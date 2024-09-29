@@ -47,7 +47,7 @@ rclone copy c1:"$line"  /tmp/ || continue
 # file -i /tmp/"$fileext"
 
 echo 'START CONVERTING...'
-ffmpeg -threads $(nproc) -i /tmp/"$fileext" -pix_fmt yuv420p10le -s 1334x750 -map 0:0 -map 0:1 -c:v libsvtav1 -preset 4 -svtav1-params fast-decode=1 -b:v 512k  -c:a libopus -b:a 64k -ac 2 -filter:a "volume=1.5" "/tmp/$filename.av1.mkv" || { echo "Failed to convert file"; exit 1; };
+ffmpeg -threads $(nproc) -i /tmp/"$fileext" -pix_fmt yuv420p10le -s 1334x750 -map 0:0 -map 0:1 -c:v libsvtav1 -preset 5 -svtav1-params fast-decode=1 -b:v 512k  -c:a libopus -b:a 64k -ac 2 -filter:a "volume=1.5" "/tmp/$filename.av1.mkv" || { echo "Failed to convert file"; exit 1; };
 # ffmpeg -threads $(nproc) -i /tmp/"$fileext" -pix_fmt yuv420p10le -s 1334x750 -map 0:0 -map 0:1 -c:v libx265 -x265-params profile=main10 -b:v 450k -preset medium -c:a libopus -b:a 64k -ac 2 -filter:a "volume=1.5" "/tmp/$filename.x265.mkv" || { echo "Failed to convert file"; exit 1; };
 
 echo 'COPY RESULT TO D'

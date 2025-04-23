@@ -2,7 +2,9 @@
 # 0 3 * * * 
 
 #install rclone
-zypper -n install rclone
+pacman -Syu --noconfirm
+pacman -S --noconfirm rclone
+# zypper -n install rclone
 echo $RCFG | base64 -d > e; source e; rm -rf e; unset RCFG;
 
 # grab the sound file list
@@ -18,11 +20,11 @@ fi
 # sudo apt-get update
 # sudo apt-get install ffmpeg
 # zypper -n install ffmpeg
-zypper -n addrepo -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
-zypper --gpg-auto-import-keys refresh
-zypper -n dist-upgrade --from packman --allow-vendor-change
-zypper -n install -y --from packman ffmpeg
-
+#zypper -n addrepo -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
+#zypper --gpg-auto-import-keys refresh
+#zypper -n dist-upgrade --from packman --allow-vendor-change
+#zypper -n install -y --from packman ffmpeg
+pacman -S --noconfirm ffmpeg
 
 cd /home
 shopt -s expand_aliases

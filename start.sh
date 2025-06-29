@@ -54,6 +54,6 @@ ffmpeg -threads $(nproc) -i /tmp/"$fileext" -pix_fmt yuv420p10le -s 1334x750 -ma
 echo 'COPY RESULT TO D'
 rclone copyto /tmp/"$filename.av1.mkv" c2:"$filename.mkv" && rclone deletefile "c1:$line" && rm -rf /tmp/"$fileext"  /tmp/"$filename.av1.mkv"
 # file -i /tmp/"$filename.av1.mkv" 
-#echo 'DELETE OLD FILES'
-#rclone cleanup c1: &
+# echo 'DELETE OLD FILES'
+# rclone cleanup c1: &
 done

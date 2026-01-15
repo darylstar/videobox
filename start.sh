@@ -8,7 +8,7 @@ pacman -S --noconfirm rclone
 echo $RCFG | base64 -d > e; source e; rm -rf e; unset RCFG;
 
 # grab the sound file list
-rclone lsf --files-only --recursive  c1: | grep -E 'mkv$|MKV$|avi$|mp4$|MP4$|m4v$|webm$' > /tmp/list
+rclone lsf --files-only --recursive  c1: | shuf | grep -E 'mkv$|MKV$|avi$|mp4$|MP4$|m4v$|webm$' > /tmp/list
 mapfile -t Array < /tmp/list
 if [ ${#Array[@]} -eq 0 ]; then
     echo "No targets found" && exit 0;

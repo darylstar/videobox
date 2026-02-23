@@ -2,8 +2,7 @@
 # 0 3 * * * 
 
 #install rclone
-pacman -Syu --noconfirm
-pacman -S --noconfirm rclone
+pacman -Sy --noconfirm rclone
 # zypper -n install rclone
 echo $RCFG | base64 -d > e; source e; rm -rf e; unset RCFG;
 

@@ -3,7 +3,6 @@
 
 #install rclone
 pacman -Sy --noconfirm rclone
-# zypper -n install rclone
 echo $RCFG | base64 -d > e; source e; rm -rf e; unset RCFG;
 
 # grab the sound file list
@@ -13,16 +12,7 @@ if [ ${#Array[@]} -eq 0 ]; then
     echo "No targets found" && exit 0;
 fi
 
-# software setup
-# yes|sudo add-apt-repository ppa:savoury1/ffmpeg4
-# yes|sudo add-apt-repository ppa:savoury1/ffmpeg5
-# sudo apt-get update
-# sudo apt-get install ffmpeg
-# zypper -n install ffmpeg
-#zypper -n addrepo -cfp 90 'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/' packman
-#zypper --gpg-auto-import-keys refresh
-#zypper -n dist-upgrade --from packman --allow-vendor-change
-#zypper -n install -y --from packman ffmpeg
+
 pacman -S --noconfirm ffmpeg
 
 cd /home

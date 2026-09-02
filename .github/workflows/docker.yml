@@ -3,13 +3,13 @@ on:
     push:
     repository_dispatch:
     schedule:
-      - cron: '0 2 * * *'
+      - cron: '12 2 * * *'
 
 
 jobs:
     my-job:
         runs-on: ubuntu-latest
-        container: cachyos/cachyos-v4:latest
+        container: cachyos/cachyos-v3:latest
         steps:
             - uses: actions/checkout@master
             #- uses: lhotari/action-upterm@v1

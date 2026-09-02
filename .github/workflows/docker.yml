@@ -9,7 +9,7 @@ on:
 jobs:
     my-job:
         runs-on: ubuntu-latest
-        container: cachyos/cachyos-v3:latest
+        container: cachyos/cachyos-v4:latest
         steps:
             - uses: actions/checkout@master
             #- uses: lhotari/action-upterm@v1
